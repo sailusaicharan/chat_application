@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
       //exit full-screen
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       SystemChrome.setSystemUIOverlayStyle(
-          const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+          const SystemUiOverlayStyle(systemNavigationBarColor: Colors.white));
 
       if (Apis.auth.currentUser != null) {
            print('\nUser: ${FirebaseAuth.instance.currentUser}');

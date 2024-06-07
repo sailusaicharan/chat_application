@@ -36,16 +36,27 @@ class _LoginScreenState extends State<LoginScreen> {
   _handleGoogleBtnClick() {
     // For showing Progress Bar
     Dialogs.showProgressBar(context);
-    _signInWithGoogle().then((user) {
+    _signInWithGoogle().then((user) async{
     // For Hiding Progress Bar
       Navigator.pop(context);
       if(user != null){
          print('\nUser: ${user.user}');
-      print('\nUserAditionalInfo: ${user.additionalUserInfo}');
+         print('\nUserAditionalInfo: ${user.additionalUserInfo}');
 
-      Navigator.pushReplacement(
+         if((await Apis.userExists())){
+
+          Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => const HomeScreen()));
 
+         }else {
+          await Apis.createUser().then((value) {
+            Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+
+          });
+         }
+
+      
       }
      
     });
@@ -94,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // app bar
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Welcome to We Chat'),
+        // title: const Text('Welcome to We Chat'),
       ),
 
       body: Stack(
